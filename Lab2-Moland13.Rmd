@@ -33,7 +33,7 @@ Open access data was utilized for this class exercise from the study (Moland et 
 
 #### 2.  Make a pretty figure
 
-#### 3.  Explore fate of Norwegian lobster
+#### 3.  Explore Norwegian lobster data
 
 #### 4.  Have fun!
 
@@ -42,9 +42,12 @@ Open access data was utilized for this class exercise from the study (Moland et 
 ```{r}
 
 library(tidyverse); library(janitor); library(here)   
-library(gt); library(praise); library(fortunes)
-library(cowsay); library(beepr); library(usethis)
-library(randomNames); library(colourpicker); library(RColorBrewer)
+library(gt); library(praise); library(cowsay); library(beepr); 
+library(ggthemes);library(bbplot)
+
+### Use to install package `bbplot` ###
+# install.packages('devtools')
+# devtools::install_github('bbc/bbplot')
 
 ```
 
@@ -75,7 +78,7 @@ lob_data <- read_csv(here("data", "moland13_lobsters.csv")) %>%
 
 ### Make pretty tables with the {`gt`} package
 
-![Source:](figures/gt-table-parts.png)
+![Source: https://gt.rstudio.com/articles/gt.html](figures/gt-table-parts.png)
 
 Create a table with total CPUE for each year and region
 ```{r}
@@ -90,18 +93,12 @@ Customize table using gt
 
 tbl_2way %>% 
 
-
-
-# title = "Total CPUE by Region and Year",
-# subtitle = "Total catch per unit effort by year and region" 
-# 
-# bol = "Bolærne"
-# flo = "Kvernskjær"
-# kve = "Flødevigen"
-#   
-# "Source: Moland et al., 2013"
-
 ```
+
+```{r}
+beep(2); praise()
+```
+
 
 ```{r}
 say("Create more tables we must", "yoda")
@@ -113,6 +110,7 @@ say("Create more tables we must", "yoda")
 
 Wrange data for 3-way table
 ```{r}
+
 tbl_3way <- lob_data %>%
 
 ```
@@ -122,38 +120,10 @@ Customize table using {`gt`}
 
 tbl_3way %>%
 
-
-
-  # title = "Total CPUE by Region, Treatment, and Year",
-  # subtitle = "Aggregated totals of CPUE by year for each region and treatment"
-  # label = "Bolærne",
-  # columns = c("bol_con", "bol_mpa")
-  # label = "Flødevigen",
-  # columns = c("flo_con", "flo_mpa")
-  # label = "Kvernskjær",
-  # columns = c("kve_con", "kve_mpa")
-
-  # cols_label(
-  #   bol_con = "Control",
-  #   bol_mpa = "MPA",
-  #   flo_con = "Control",
-  #   flo_mpa = "MPA",
-  #   kve_con = "Control",
-  #   kve_mpa = "MPA") %>% 
-  # data_color(
-  #   columns = c("bol_con", "flo_con", "kve_con"),
-  #   colors = scales::col_numeric(
-  #     palette = c("blue"),
-  #     domain = NULL)) %>% 
-  # data_color(
-  #   columns = c("bol_mpa", "flo_mpa", "kve_mpa"),
-  #   colors = scales::col_numeric(
-  #     palette = c("red"),
-  #     domain = NULL))
 ```
 
 ```{r}
-beep(1); praise("${Exclamation}!- You've ${created} something ${adjective}!")
+beep(); praise("${EXCLAMATION}!- You've ${created} something ${adjective}!")
 ```
 
 ```{r}
@@ -172,16 +142,9 @@ lob_size <- read_csv(here("data", "moland13_lobstersize.csv")) %>%
 
 Create plot 
 ```{r}
-
-lob_size %>% 
-
-    
-  # legend.position = "none",
-  # plot.title = element_text(size = 16),
-  # plot.subtitle = element_text(size = 12),
-  # plot.caption = element_text(size = 12),
-  # strip.text = element_text(size = 12, face = "bold", family = "mono"
+lob_size %>%
 ```
+
 
 Save plot figure
 ```{r}
@@ -189,7 +152,7 @@ ggsave(here("figures", "lbstr-ridge-plot.png"), dpi=300, height=5, width=7, unit
 ```
 
 ```{r}
-say("I guess this is the END :) ", "stegosaurus"); beep(2) 
+say("I guess this is the END :) ", "stegosaurus"); beep(3)
 ```
 
 ------------------------------------------------------------------------
@@ -198,15 +161,17 @@ say("I guess this is the END :) ", "stegosaurus"); beep(2)
 
 1. {`gt`} package (Iannone et al., 2024):
 
-https://gt.rstudio.com/articles/gt.html
+[gt table examples](https://gt.rstudio.com/articles/gt.html)
 
 2. {`janitor`} package (`adorn_`; Firke, 2023):  
 
-https://sfirke.github.io/janitor/articles/tabyls.html#the-adorn_-functions
+[adorn_ examples](https://sfirke.github.io/janitor/articles/tabyls.html#the-adorn_-functions)
 
-3. {`ggthemes`} package (Arnold, 2024):
+3. {`ggthemes`} & {`bbplot`} package (Arnold, 2024):
 
-https://jrnold.github.io/ggthemes/
+[ggthemes examples](https://jrnold.github.io/ggthemes/)
+
+[BBC themed "bbplot" examples](https://bbc.github.io/rcookbook/)
 
 ```{r}
 # More themes! 
@@ -214,12 +179,11 @@ https://jrnold.github.io/ggthemes/
 ?theme_fivethirtyeight()
 ?theme_wsj()
 ?theme_solarized()
+?bbc_style()
 ```
 
 
 4. {`cowsay`} package (Chamberlain & Dobbyn, 2024):
-
-https://github.com/sckott/cowsay
 
 ```{r}
 names(animals) # Check out all the animals!
@@ -231,10 +195,19 @@ names(animals) # Check out all the animals!
 praise_parts
 ```
 
+6. {`beepr`} package (Rasmus Bååth, 2024)
+
+```{r}
+# Try: `beep(999)` to pick a sound at random (there are 11 sounds)!
+
+beep(999)
+```
+
+
 ------------------------------------------------------------------------
 
 ```{r}
-say("That's all folks!", "egret") 
+say("That's all folks!", "egret"); beep(3) 
 ```
 
 ------------------------------------------------------------------------
